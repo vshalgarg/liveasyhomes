@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2, Loader2 } from "lucide-react";
+import { submitContact } from "@/lib/api/contact";
+import { ApiError } from "@/lib/api/client";
 
 const initialState = {
   name: "",
@@ -20,6 +22,7 @@ export default function ContactForm() {
   const [values, setValues] = useState(initialState);
   const [status, setStatus] = useState("idle");
   const [errors, setErrors] = useState({});
+  const [formError, setFormError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,12 +61,24 @@ export default function ContactForm() {
     }
 
     setStatus("submitting");
+    setFormError("");
     try {
-      await new Promise((resolve) => setTimeout(resolve, 900));
+      await submitContact({
+        name: values.name.trim(),
+        email: values.email.trim(),
+        phone: values.phone.trim(),
+        message: values.message.trim(),
+      });
       setStatus("success");
       setValues(initialState);
-    } catch (_) {
+    } catch (err) {
       setStatus("idle");
+      if (err instanceof ApiError && err.fields) {
+        setErrors(err.fields);
+      }
+      setFormError(
+        err?.message || "Could not send your message. Please try again."
+      );
     }
   };
 
@@ -216,6 +231,12 @@ export default function ContactForm() {
               placeholder="Tell us a bit about what you're looking for…"
             />
           </div>
+
+          {formError && (
+            <p className="text-sm text-red-600" role="alert">
+              {formError}
+            </p>
+          )}
 
           <button
             type="submit"

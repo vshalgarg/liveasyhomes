@@ -4,9 +4,9 @@ import AnimateIn from "./AnimateIn";
 const iconClass = "mx-auto h-10 w-10 text-[#8A6A55]";
 
 const stats = [
-  { value: "10,000+", label: "Happy Residents", icon: Home },
-  { value: "500+", label: "Quality Homes", icon: Building2 },
-  { value: "12+", label: "Cities", icon: MapPin },
+  { value: "100+", label: "Happy Residents", icon: Home },
+  { value: "50+", label: "Quality Homes", icon: Building2 },
+  { value: "3+", label: "Cities", icon: MapPin },
   { value: "4.8/5", label: "Customer Rating", icon: Star },
 ];
 

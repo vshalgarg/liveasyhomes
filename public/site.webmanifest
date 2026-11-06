@@ -1,0 +1,24 @@
+{
+  "name": "LiveEasy Homes",
+  "short_name": "LiveEasy",
+  "description": "Verified rental homes in Delhi, Faridabad, and Delhi-NCR.",
+  "start_url": "/home",
+  "display": "standalone",
+  "background_color": "#F8F5F1",
+  "theme_color": "#F8F5F1",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/logo-only.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-new.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

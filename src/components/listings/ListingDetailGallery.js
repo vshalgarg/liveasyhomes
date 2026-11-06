@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useState } from "react";
 import { ChevronLeft, ChevronRight, Images, ZoomIn } from "lucide-react";
 import GalleryLightbox from "./GalleryLightbox";
+import PropertyPhoto from "./PropertyPhoto";
 
 export default function ListingDetailGallery({ images, alt }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,7 +55,7 @@ export default function ListingDetailGallery({ images, alt }) {
               className="absolute inset-0 z-[1] cursor-zoom-in"
               aria-label={`Enlarge photo ${activeIndex + 1}`}
             >
-              <Image
+              <PropertyPhoto
                 src={images[activeIndex]}
                 alt={`${alt} — photo ${activeIndex + 1} of ${images.length}`}
                 fill
@@ -121,7 +121,7 @@ export default function ListingDetailGallery({ images, alt }) {
                       : "border-transparent opacity-60"
                   }`}
                 >
-                  <Image
+                  <PropertyPhoto
                     src={src}
                     alt=""
                     fill
@@ -158,7 +158,7 @@ export default function ListingDetailGallery({ images, alt }) {
                 }`}
                 aria-label={`Enlarge photo ${imageIndex + 1}`}
               >
-                <Image
+                <PropertyPhoto
                   src={src}
                   alt={`${alt} — photo ${imageIndex + 1}`}
                   fill
@@ -201,7 +201,7 @@ export default function ListingDetailGallery({ images, alt }) {
                     : "border-transparent opacity-55 hover:opacity-80"
                 }`}
               >
-                <Image
+                <PropertyPhoto
                   src={src}
                   alt=""
                   fill

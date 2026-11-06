@@ -81,7 +81,7 @@ export default function ListingMapView({ properties }) {
       ref={containerRef}
       className="h-full w-full z-0"
       role="application"
-      aria-label="Map showing property locations in Bangalore"
+      aria-label="Map showing property locations"
     />
   );
 }

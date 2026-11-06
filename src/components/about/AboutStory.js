@@ -4,7 +4,7 @@ import AnimateIn from "../AnimateIn";
 const paragraphs = [
   "LiveEasy Homes was started with a simple idea — renting a home in India should feel calm, not chaotic. Too many tenants spend weeks navigating brokers, surprises, and uncertainty before they ever settle in. We knew it could be better.",
   "We work directly with property owners and on-ground teams to bring you a curated portfolio of verified rental homes. Every listing is inspected, every detail double-checked, and every move-in is supported by people who care.",
-  "Today, we help thousands of residents across India find homes they love — and we manage those homes professionally so owners and tenants can both rest easy.",
+  "Today, we help thousands of residents across Delhi-NCR find homes they love — and we manage those homes professionally so owners and tenants can both rest easy.",
 ];
 
 export default function AboutStory() {
@@ -31,9 +31,9 @@ export default function AboutStory() {
                 className="hidden md:block absolute -bottom-8 -right-6 lg:-right-10 rounded-2xl bg-white px-6 py-5 shadow-lg ring-1 ring-[#EFE7DF] max-w-[260px]"
                 aria-hidden="true"
               >
-                <p className="text-3xl font-serif text-[#2B2118]">10,000+</p>
+                <p className="text-3xl font-serif text-[#2B2118]">100+</p>
                 <p className="mt-1 text-sm text-gray-600">
-                  Residents living easy across India
+                  Residents living easy across Delhi-NCR
                 </p>
               </div>
             </div>

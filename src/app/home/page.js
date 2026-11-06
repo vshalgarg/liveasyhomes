@@ -6,19 +6,33 @@ import WhyChooseUS from "@/components/WhyChooseUs";
 import StatsSection from "@/components/StatsSection";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
-import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
-import { siteConfig } from "@/lib/site";
+import { OrganizationJsonLd, WebSiteJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
+import { siteConfig, pageKeywords, defaultOpenGraph } from "@/lib/site";
 
 export const metadata = {
-  title: "Find Your Calm Place",
+  title: {
+    absolute: `${siteConfig.name} | Verified Rentals in Delhi & Faridabad`,
+  },
   description: siteConfig.description,
+  keywords: pageKeywords(
+    "rent apartment Delhi",
+    "rent apartment Faridabad",
+    "find rental home Delhi NCR"
+  ),
   alternates: {
     canonical: "/home",
   },
   openGraph: {
-    title: `${siteConfig.name} | Find Your Calm Place`,
+    ...defaultOpenGraph,
+    title: `${siteConfig.name} | Verified Rentals in Delhi & Faridabad`,
     description: siteConfig.description,
     url: "/home",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} | Verified Rentals in Delhi & Faridabad`,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
 };
 
@@ -27,6 +41,11 @@ export default function Home() {
     <>
       <OrganizationJsonLd />
       <WebSiteJsonLd />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/home" },
+        ]}
+      />
       <main id="main-content">
         <HomeBanner />
         <PropertySearch />

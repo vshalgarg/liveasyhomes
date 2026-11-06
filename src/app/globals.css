@@ -136,4 +136,126 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  @keyframes testimonial-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .testimonial-marquee-track {
+    animation: testimonial-marquee 60s linear infinite;
+    width: max-content;
+  }
+
+  .testimonial-marquee:hover .testimonial-marquee-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-marquee-track {
+      animation: none;
+    }
+  }
+
+  @keyframes coming-soon-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes coming-soon-pop {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes coming-soon-icon {
+    0% {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .coming-soon-backdrop {
+    animation: coming-soon-fade 280ms ease-out;
+  }
+
+  .coming-soon-dialog {
+    animation: coming-soon-pop 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .coming-soon-icon {
+    animation: coming-soon-icon 900ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .coming-soon-backdrop,
+    .coming-soon-dialog,
+    .coming-soon-icon {
+      animation: none;
+    }
+  }
+}
+
+/* Property description rich text (editor + detail page) */
+.rich-text-editor:empty:before,
+.rich-text-editor[data-placeholder]:not(:focus):before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.rich-text b,
+.rich-text strong,
+.rich-text-editor b,
+.rich-text-editor strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+.rich-text i,
+.rich-text em,
+.rich-text-editor i,
+.rich-text-editor em {
+  font-style: italic;
+}
+
+.rich-text u,
+.rich-text-editor u {
+  text-decoration: underline;
+}
+
+.rich-text p,
+.rich-text div {
+  margin: 0 0 0.75em;
+}
+
+.rich-text p:last-child,
+.rich-text div:last-child {
+  margin-bottom: 0;
+}
+
+.rich-text br {
+  display: block;
+  content: "";
+  margin-top: 0.35em;
 }

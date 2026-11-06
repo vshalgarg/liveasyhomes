@@ -24,10 +24,13 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const isActive = (path) =>
-    path === "/home"
-      ? pathname === "/home" || pathname === "/"
-      : pathname.startsWith(path);
+  const isActive = (path) => {
+    if (path === "/home") return pathname === "/home" || pathname === "/";
+    if (path === "/listings") {
+      return pathname === "/listings" || pathname.startsWith("/listings/");
+    }
+    return pathname.startsWith(path);
+  };
 
   const handleClose = () => setMenuOpen(false);
 
@@ -42,14 +45,14 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#F8F5F1]/95 backdrop-blur border-b border-[#E8DFD6] pt-[env(safe-area-inset-top)]">
-      <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-16 lg:h-20">
+      <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-20 lg:h-24">
         <Link href="/home" className="shrink-0" onClick={handleClose}>
           <Image
-            src="/logo-bg.png"
+            src="/logo-new.png"
             alt="LiveEasy Homes — verified rental homes in Bangalore"
-            width={140}
-            height={44}
-            className="h-9 w-auto lg:h-11"
+            width={500}
+            height={80}
+            className="h-16 w-auto lg:h-20"
             priority
           />
         </Link>
@@ -70,20 +73,12 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
-          <button
-            type="button"
-            className="min-h-[44px] px-5 py-2 text-sm font-medium text-[#2B2118] hover:bg-white/60 rounded-full transition"
-          >
-            Log In
-          </button>
-          <button
-            type="button"
-            className="min-h-[44px] px-5 py-2 text-sm font-medium bg-[#2B1D13] text-white rounded-full hover:bg-[#3a2a1e] transition"
-          >
-            Sign Up
-          </button>
-        </div>
+        <Link
+          href="/listings"
+          className="hidden md:inline-flex min-h-[44px] items-center px-5 py-2 text-sm font-medium bg-[#2B1D13] text-white rounded-full hover:bg-[#3a2a1e] transition"
+        >
+          Browse homes
+        </Link>
 
         <button
           type="button"
@@ -114,20 +109,13 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
-          <div className="flex flex-col gap-2 pt-4 mt-2 border-t border-[#E8DFD6]">
-            <button
-              type="button"
-              className="w-full min-h-[48px] text-sm font-medium border border-[#D7CEC7] rounded-full"
-            >
-              Log In
-            </button>
-            <button
-              type="button"
-              className="w-full min-h-[48px] text-sm font-medium bg-[#2B1D13] text-white rounded-full"
-            >
-              Sign Up
-            </button>
-          </div>
+          <Link
+            href="/listings"
+            onClick={handleClose}
+            className="mt-3 w-full min-h-[48px] inline-flex items-center justify-center text-sm font-medium bg-[#2B1D13] text-white rounded-full"
+          >
+            Browse homes
+          </Link>
         </nav>
       )}
     </header>

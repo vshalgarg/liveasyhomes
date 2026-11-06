@@ -4,9 +4,9 @@ import AnimateIn from "../AnimateIn";
 const iconClass = "mx-auto h-10 w-10 text-[#E8C9A8]";
 
 const stats = [
-  { value: "10,000+", label: "Happy Residents", icon: Home },
-  { value: "500+", label: "Quality Homes", icon: Building2 },
-  { value: "12+", label: "Cities Served", icon: MapPin },
+  { value: "100+", label: "Happy Residents", icon: Home },
+  { value: "50+", label: "Quality Homes", icon: Building2 },
+  { value: "3+", label: "Cities Served", icon: MapPin },
   { value: "4.8/5", label: "Customer Rating", icon: Star },
 ];
 
@@ -23,7 +23,7 @@ export default function AboutStats() {
               Our Impact
             </span>
             <h2 className="text-3xl md:text-4xl font-serif text-[#2B2118] mt-4 leading-snug">
-              Trusted by thousands across India.
+              Trusted by many across Delhi-NCR.
             </h2>
           </header>
         </AnimateIn>

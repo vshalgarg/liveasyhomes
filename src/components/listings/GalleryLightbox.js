@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useId } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import PropertyPhoto from "./PropertyPhoto";
 
 export default function GalleryLightbox({
   images,
@@ -85,7 +85,7 @@ export default function GalleryLightbox({
         )}
 
         <div className="relative w-full max-w-5xl h-full max-h-[min(75vh,720px)] mx-10 sm:mx-14">
-          <Image
+          <PropertyPhoto
             src={images[activeIndex]}
             alt={`${alt} — enlarged photo ${activeIndex + 1}`}
             fill
@@ -128,7 +128,13 @@ export default function GalleryLightbox({
                   : "border-white/20 opacity-60 hover:opacity-90"
               }`}
             >
-              <Image src={src} alt="" fill sizes="96px" className="object-cover" />
+              <PropertyPhoto
+                src={src}
+                alt=""
+                fill
+                sizes="96px"
+                className="object-cover"
+              />
             </button>
           ))}
         </div>

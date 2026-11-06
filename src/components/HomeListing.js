@@ -1,14 +1,48 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import PropertyCard from "./PropertyCard";
 import AnimateIn from "./AnimateIn";
-import { getPropertiesBySection } from "@/data/properties";
-
-const properties = getPropertiesBySection("featured").map((p) => ({
-  ...p,
-  image: p.images[0],
-}));
+import { listProperties } from "@/lib/api/properties";
 
 export default function HomeListing() {
+  const [properties, setProperties] = useState([]);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const featured = await listProperties({ section: "featured", size: 6 });
+        let items = (featured.content || []).filter((p) => p.isActive !== false);
+
+        if (items.length < 3) {
+          const latest = await listProperties({ size: 9 });
+          const seen = new Set(items.map((p) => p.id));
+          for (const property of latest.content || []) {
+            if (property.isActive === false || seen.has(property.id)) continue;
+            items.push(property);
+            seen.add(property.id);
+            if (items.length >= 6) break;
+          }
+        }
+
+        if (!cancelled) setProperties(items.slice(0, 6));
+      } catch {
+        if (!cancelled) setProperties([]);
+      } finally {
+        if (!cancelled) setReady(true);
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <section
       className="py-16 md:py-20 bg-white"
@@ -39,6 +73,16 @@ export default function HomeListing() {
           </div>
         </AnimateIn>
 
+        {!ready && (
+          <p className="text-sm text-gray-500">Loading homes…</p>
+        )}
+
+        {ready && properties.length === 0 && (
+          <p className="text-sm text-gray-600">
+            No published homes yet. Check back soon.
+          </p>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {properties.map((property, index) => (
             <AnimateIn
@@ -47,7 +91,12 @@ export default function HomeListing() {
               delay={index * 100}
               className="contents"
             >
-              <PropertyCard property={property} />
+              <PropertyCard
+                property={{
+                  ...property,
+                  image: property.image || property.images?.[0],
+                }}
+              />
             </AnimateIn>
           ))}
         </div>

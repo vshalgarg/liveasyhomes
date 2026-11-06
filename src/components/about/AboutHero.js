@@ -46,8 +46,8 @@ export default function AboutHero() {
             <AnimateIn animation="fade-up" immediate delay={220}>
               <p className="mt-6 text-gray-600 text-lg leading-relaxed max-w-xl">
                 LiveEasy Homes is a thoughtfully curated network of
-                professionally managed rental homes across India. We blend the
-                comfort of a great home with the simplicity of modern service —
+                professionally managed rental homes across Delhi-NCR. We blend the
+                comfort of a great home with the simplicity of modern service
                 so you can move in, settle down, and just live.
               </p>
             </AnimateIn>

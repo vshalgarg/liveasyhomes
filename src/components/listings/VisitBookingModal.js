@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { sendVisitOtp, verifyVisitOtp } from "@/lib/api/visits";
+import { ApiError } from "@/lib/api/client";
 
 const STEPS = { DETAILS: "details", OTP: "otp", SUCCESS: "success" };
 
@@ -63,30 +65,23 @@ export default function VisitBookingModal({ property, isOpen, onClose }) {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/visit-otp/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          propertyId: property.id,
-          propertyTitle: property.title,
-        }),
+      const data = await sendVisitOtp({
+        name,
+        email,
+        phone,
+        propertyId: property.id,
+        propertyTitle: property.title,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Failed to send OTP.");
-        return;
-      }
-
-      if (data.demoOtp) setDemoOtp(data.demoOtp);
+      if (data?.demoOtp) setDemoOtp(data.demoOtp);
       setStep(STEPS.OTP);
       setOtp("");
-    } catch {
-      setError("Network error. Please try again.");
+    } catch (err) {
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : "Network error. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -98,22 +93,14 @@ export default function VisitBookingModal({ property, isOpen, onClose }) {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/visit-otp/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone, otp }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Invalid OTP.");
-        return;
-      }
-
+      await verifyVisitOtp({ phone, otp });
       setStep(STEPS.SUCCESS);
-    } catch {
-      setError("Network error. Please try again.");
+    } catch (err) {
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : "Network error. Please try again."
+      );
     } finally {
       setLoading(false);
     }

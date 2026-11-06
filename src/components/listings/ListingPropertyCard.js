@@ -66,7 +66,7 @@ export default function ListingPropertyCard({ property, priority = false }) {
           </p>
 
           <ul className="flex flex-wrap gap-x-4 gap-y-1 mt-5 pt-5 border-t border-[#EDE6DF] text-sm text-gray-600 list-none m-0 p-0">
-            <li>{property.beds} Beds</li>
+            <li>{property.floorPlan || `${property.beds} Beds`}</li>
             <li>{property.baths} Baths</li>
             <li>{property.area} sqft</li>
           </ul>

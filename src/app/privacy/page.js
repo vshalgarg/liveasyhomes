@@ -3,7 +3,12 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata = {
   title: "Privacy Policy",
-  description: `Privacy policy for ${siteConfig.name} — how we collect, use, and protect your personal information.`,
+  description: `Privacy policy for ${siteConfig.name} — how we collect, use, and protect your personal information when you search rentals or book visits.`,
+  keywords: [
+    "LiveEasy Homes privacy policy",
+    "rental platform data protection",
+    "personal information India",
+  ],
   alternates: { canonical: "/privacy" },
   robots: { index: true, follow: true },
 };

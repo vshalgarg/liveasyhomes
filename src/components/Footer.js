@@ -13,7 +13,7 @@ export default function Footer() {
     <footer className="bg-[#8B7361] pt-16 pb-10 md:pt-20 text-[#F9F7F4]">
       <AnimateIn animation="fade-up" threshold={0.05}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div className="sm:col-span-2">
             <p className="text-2xl font-serif font-semibold text-white">
               LiveEasy Homes
@@ -53,37 +53,6 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
-
-          <div className="sm:col-span-2 lg:col-span-1">
-            <h2 className="font-semibold mb-5 text-base text-white">Newsletter</h2>
-
-            <form
-              className="flex flex-col sm:flex-row gap-2"
-              action="#"
-              aria-label="Newsletter signup"
-            >
-              <label htmlFor="newsletter-email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="newsletter-email"
-                name="email"
-                type="email"
-                required
-                placeholder="Enter your email"
-                autoComplete="email"
-                className="w-full min-h-[48px] rounded-xl sm:rounded-l-xl sm:rounded-r-none px-4 py-3 outline-none bg-white text-[#2B2118] placeholder:text-gray-400 border border-transparent focus:border-[#F9F7F4]"
-              />
-
-              <button
-                type="submit"
-                className="bg-[#2B1D13] text-white px-5 min-h-[48px] rounded-xl sm:rounded-l-none sm:rounded-r-xl hover:bg-[#3a2a1e] transition shrink-0"
-                aria-label="Subscribe to newsletter"
-              >
-                →
-              </button>
-            </form>
           </div>
         </div>
 

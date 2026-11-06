@@ -1,38 +1,109 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, User } from "lucide-react";
 import readyToFind from "../../public/ready_to_find.png";
 import AnimateIn from "./AnimateIn";
 
 const testimonials = [
   {
-    id: "neha-r",
-    name: "Neha R.",
-    city: "Bangalore",
+    id: "rahul-patil",
+    name: "Rahul Patil",
+    city: "Faridabad",
+    type: "Tenant",
     review:
       "LiveEasy Homes made finding my ideal home so easy. The team is professional, friendly and very supportive.",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
   },
   {
-    id: "arjun-s",
-    name: "Arjun S.",
-    city: "Bangalore",
+    id: "ayush",
+    name: "Ayush",
+    city: "South-Ex, Delhi",
+    type: "Tenant",
     review:
       "The whole process was smooth and transparent. I love my new home!",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
   },
   {
-    id: "priya-m",
-    name: "Priya M.",
-    city: "Bangalore",
+    id: "santosh",
+    name: "Santosh",
+    city: "Dwarka, Delhi",
+    type: "Tenant",
     review:
       "Great homes, great people and amazing support. Highly recommended!",
-    avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+  },
+  {
+    id: "kavya-nair",
+    name: "Pankaj Kaswan",
+    city: "Kalka Ji, Delhi",
+    type: "Tenant",
+    review:
+      "From the first visit to move-in, everything felt organised. I found a calm, verified home without endless broker calls.",
+  },
+  {
+    id: "rohan-mehta",
+    name: "Ashutosh Bhati",
+    city: "Faridabad",
+    type: "Tenant",
+    review:
+      "Booking a free visit was simple and the team answered every question. Settling into my apartment was stress-free.",
+  },
+  {
+    id: "meera-sharma",
+    name: "Shilpa Bhasak",
+    city: "Faridabad",
+    type: "House Owner",
+    review:
+      "Listing with LiveEasy was effortless. They screened tenants carefully and I get reliable rent without follow-ups.",
+  },
+  {
+    id: "vikram-singh",
+    name: "Gurpreet Sondhi",
+    city: "Faridabad",
+    type: "House Owner",
+    review:
+      "As a house owner, I finally feel my property is in good hands — clear communication and professional management throughout.",
+  },
+  {
+    id: "anita-desai",
+    name: "Thresiamma Isac",
+    city: "Dwarka, Delhi",
+    type: "House Owner",
+    review:
+      "LiveEasy handles visits, tenants, and upkeep so I don’t have to. Peace of mind and consistent occupancy for my home.",
+  },
+  {
+    id: "suresh-iyer",
+    name: "Dhruv Singh",
+    city: "Tilak Nagar, Delhi",
+    type: "House Owner",
+    review:
+      "I listed my flat once and LiveEasy took care of the rest — quality tenants, timely updates, and zero drama.",
+  },
+  {
+    id: "pooja-kapoor",
+    name: "Divya Suri",
+    city: "South-Ex, Delhi",
+    type: "House Owner",
+    review:
+      "Professional team and fair process. My property stays occupied with tenants I trust, and I barely need to intervene.",
   },
 ];
+
+/** Alternate Tenant → House Owner → Tenant → … */
+function interleaveByType(items) {
+  const tenants = items.filter((item) => item.type === "Tenant");
+  const owners = items.filter((item) => item.type === "House Owner");
+  const ordered = [];
+  const max = Math.max(tenants.length, owners.length);
+  for (let i = 0; i < max; i += 1) {
+    if (tenants[i]) ordered.push(tenants[i]);
+    if (owners[i]) ordered.push(owners[i]);
+  }
+  return ordered;
+}
+
+const orderedTestimonials = interleaveByType(testimonials);
+const marqueeItems = [...orderedTestimonials, ...orderedTestimonials];
 
 function QuoteMark() {
   return (
@@ -47,26 +118,30 @@ function QuoteMark() {
 
 function TestimonialCard({ item }) {
   return (
-    <figure className="flex h-full flex-col rounded-2xl bg-white p-8 transition-shadow duration-300 hover:shadow-lg h-full">
-      <QuoteMark />
+    <figure className="flex h-full w-[300px] sm:w-[340px] flex-col rounded-2xl bg-white p-6 sm:p-8 shadow-sm ring-1 ring-[#EFE7DF]">
+      <div className="flex items-start justify-between gap-3">
+        <QuoteMark />
+        <span className="shrink-0 rounded-full bg-[#F7F3EE] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8A6A55]">
+          {item.type}
+        </span>
+      </div>
       <blockquote className="mt-4 flex-1">
-        <p className="text-[#4A4A4A] leading-relaxed">{item.review}</p>
+        <p className="text-[#4A4A4A] leading-relaxed text-sm sm:text-base line-clamp-5">
+          {item.review}
+        </p>
       </blockquote>
-      <figcaption className="mt-8 flex items-center gap-3">
-        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full">
-          <Image
-            src={item.avatar}
-            alt={`${item.name}, LiveEasy Homes client from ${item.city}`}
-            fill
-            sizes="48px"
-            className="object-cover"
-          />
+      <figcaption className="mt-6 flex items-center gap-3">
+        <div
+          className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-[#EFE7DF] text-[#8A6A55] flex items-center justify-center"
+          aria-hidden="true"
+        >
+          <User className="h-5 w-5" strokeWidth={1.75} />
         </div>
-        <div>
-          <cite className="not-italic font-semibold text-[#2B2118]">
+        <div className="min-w-0">
+          <cite className="not-italic font-semibold text-[#2B2118] block truncate">
             {item.name}
           </cite>
-          <p className="text-sm text-gray-500">{item.city}</p>
+          <p className="text-sm text-gray-500 truncate">{item.city}</p>
         </div>
       </figcaption>
     </figure>
@@ -96,19 +171,24 @@ export default function Testimonials() {
           </header>
         </AnimateIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((item, index) => (
-            <AnimateIn
-              key={item.id}
-              animation="fade-up"
-              delay={index * 120}
-              className="contents"
-            >
-              <div className="h-full">
+        <div
+          className="testimonial-marquee relative overflow-hidden"
+          aria-label="Scrolling testimonials from tenants and house owners"
+        >
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 sm:w-12 bg-gradient-to-r from-[#F3F1EE] to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 sm:w-12 bg-gradient-to-l from-[#F3F1EE] to-transparent" />
+
+          <div className="testimonial-marquee-track flex gap-5">
+            {marqueeItems.map((item, index) => (
+              <div
+                key={`${item.id}-${index}`}
+                className="shrink-0 h-[280px]"
+                aria-hidden={index >= orderedTestimonials.length}
+              >
                 <TestimonialCard item={item} />
               </div>
-            </AnimateIn>
-          ))}
+            ))}
+          </div>
         </div>
 
         <AnimateIn animation="fade-up" delay={200}>

@@ -13,24 +13,26 @@ export const properties = [
   {
     id: "maple-heights",
     title: "Maple Heights",
-    location: "Indiranagar, Bangalore",
-    city: "Bangalore",
-    lat: 12.9784,
-    lng: 77.6408,
+    location: "Saket, Delhi",
+    city: "Delhi",
+    lat: 28.5245,
+    lng: 77.2066,
     price: "48,000",
     beds: 2,
     baths: 2,
     area: 1200,
     tag: "Featured",
     section: "featured",
-    propertyType: "Apartment",
+    propertyType: "Gated Apartment",
+    floorPlan: "2 BHK",
     furnished: "Fully furnished",
     availableFrom: "Immediate move-in",
     deposit: "2 months rent",
     maintenance: "Included in rent",
+    onboardingCharge: 5000,
     images: [img.livingA, img.livingB, img.livingC, img.dining],
     description:
-      "A sun-filled two-bedroom retreat in the heart of Indiranagar — warm timber accents, soft natural light, and a layout designed for calm everyday living. Professionally managed with hotel-grade finishes and thoughtful details throughout.",
+      "A sun-filled two-bedroom retreat in Saket, Delhi — warm timber accents, soft natural light, and a layout designed for calm everyday living. Professionally managed with hotel-grade finishes throughout.",
     highlights: [
       "Corner unit with cross ventilation",
       "Premium modular kitchen",
@@ -42,24 +44,26 @@ export const properties = [
   {
     id: "olive-residences",
     title: "Olive Residences",
-    location: "Koramangala, Bangalore",
-    city: "Bangalore",
-    lat: 12.9352,
-    lng: 77.6245,
+    location: "Greater Kailash, Delhi",
+    city: "Delhi",
+    lat: 28.5483,
+    lng: 77.2397,
     price: "62,000",
     beds: 3,
     baths: 3,
     area: 1500,
     tag: "Featured",
     section: "featured",
-    propertyType: "Apartment",
+    propertyType: "Gated Apartment",
+    floorPlan: "3 BHK",
     furnished: "Fully furnished",
     availableFrom: "Within 7 days",
     deposit: "2 months rent",
     maintenance: "Included in rent",
+    onboardingCharge: 7500,
     images: [img.modernA, img.modernB, img.modernC, img.livingA],
     description:
-      "Spacious three-bedroom residence with contemporary interiors and expansive living zones — ideal for families or professionals who value space, privacy, and a polished urban lifestyle in Koramangala.",
+      "Spacious three-bedroom residence in Greater Kailash, Delhi with contemporary interiors and expansive living zones — ideal for families who want space and a polished South Delhi lifestyle.",
     highlights: [
       "Three ensuite bathrooms",
       "Dedicated work-from-home nook",
@@ -75,27 +79,29 @@ export const properties = [
   {
     id: "serene-living",
     title: "Serene Living",
-    location: "HSR Layout, Bangalore",
-    city: "Bangalore",
-    lat: 12.9116,
-    lng: 77.6474,
+    location: "Dwarka Sector 10, Delhi",
+    city: "Delhi",
+    lat: 28.5823,
+    lng: 77.0495,
     price: "55,000",
     beds: 2,
     baths: 2,
     area: 1300,
     tag: "Verified",
     section: "featured",
-    propertyType: "Apartment",
+    propertyType: "Builder Floor",
+    floorPlan: "2 BHK",
     furnished: "Semi-furnished",
     availableFrom: "Immediate move-in",
     deposit: "1.5 months rent",
     maintenance: "Included in rent",
+    onboardingCharge: 4000,
     images: [img.livingC, img.dining, img.livingA, img.roomA],
     description:
-      "Quiet, tree-lined HSR address with earthy tones and minimalist styling. Serene Living balances comfort and function — open dining, generous bedrooms, and a managed experience from day one.",
+      "Quiet Dwarka Sector 10 home with earthy tones and minimalist styling. Serene Living balances comfort and function with open dining and a managed experience from day one.",
     highlights: [
       "Verified LiveEasy Homes listing",
-      "Green neighbourhood pocket",
+      "Metro connectivity nearby",
       "In-unit washing machine",
       "Flexible lease terms",
     ],
@@ -104,28 +110,30 @@ export const properties = [
   {
     id: "cedar-loft",
     title: "Cedar Loft",
-    location: "Whitefield, Bangalore",
-    city: "Bangalore",
-    lat: 12.9698,
-    lng: 77.7499,
+    location: "Sector 15, Faridabad",
+    city: "Faridabad",
+    lat: 28.3958,
+    lng: 77.3124,
     price: "52,000",
     beds: 2,
     baths: 2,
     area: 1180,
     tag: "New",
     section: "new",
-    propertyType: "Loft",
+    propertyType: "Shared Service Apartment",
+    floorPlan: "2 BHK",
     furnished: "Fully furnished",
     availableFrom: "Within 14 days",
     deposit: "2 months rent",
     maintenance: "₹2,500/month",
+    onboardingCharge: 3500,
     images: [img.houseA, img.houseB, img.roomA, img.livingB],
     description:
-      "Loft-inspired living in Whitefield with double-height ceilings and warm cedar textures. A fresh addition to our collection — crafted for professionals seeking character without compromising on management quality.",
+      "Loft-inspired living in Sector 15, Faridabad with double-height ceilings and warm cedar textures — crafted for professionals who want character with managed quality.",
     highlights: [
       "Double-height living area",
       "Newly renovated interiors",
-      "Close to tech parks",
+      "Close to NH-19 connectivity",
       "EV charging in basement",
     ],
     amenities: sharedAmenities,
@@ -133,29 +141,31 @@ export const properties = [
   {
     id: "willow-court",
     title: "Willow Court",
-    location: "Jayanagar, Bangalore",
-    city: "Bangalore",
-    lat: 12.925,
-    lng: 77.5938,
+    location: "Sector 21C, Faridabad",
+    city: "Faridabad",
+    lat: 28.4126,
+    lng: 77.3049,
     price: "45,000",
-    beds: 2,
+    beds: 1,
     baths: 1,
     area: 1050,
     tag: "New",
     section: "new",
-    propertyType: "Apartment",
+    propertyType: "Gated Apartment",
+    floorPlan: "1 BHK",
     furnished: "Fully furnished",
     availableFrom: "Immediate move-in",
     deposit: "1 month rent",
     maintenance: "Included in rent",
+    onboardingCharge: 2500,
     images: [img.roomA, img.livingB, img.roomB, img.dining],
     description:
-      "Charming Jayanagar apartment with cream walls, soft lighting, and an intimate floor plan perfect for couples or solo residents. Willow Court delivers premium calm at an accessible monthly rent.",
+      "Charming Sector 21C, Faridabad apartment with cream walls, soft lighting, and an intimate floor plan perfect for couples or solo residents.",
     highlights: [
-      "South Bangalore classic locality",
       "Metro connectivity nearby",
       "Compact, efficient layout",
       "Managed move-in support",
+      "Quiet residential pocket",
     ],
     amenities: sharedAmenities.filter((a) => a.key !== "parking").concat([
       { key: "parking", label: "Street parking available" },
@@ -164,28 +174,30 @@ export const properties = [
   {
     id: "amber-house",
     title: "Amber House",
-    location: "Bellandur, Bangalore",
-    city: "Bangalore",
-    lat: 12.926,
-    lng: 77.6762,
+    location: "Sector 37, Faridabad",
+    city: "Faridabad",
+    lat: 28.3689,
+    lng: 77.3261,
     price: "58,000",
     beds: 3,
     baths: 2,
     area: 1420,
     tag: "New",
     section: "new",
-    propertyType: "Townhouse",
+    propertyType: "Independent House",
+    floorPlan: "3 BHK",
     furnished: "Fully furnished",
     availableFrom: "Within 7 days",
     deposit: "2 months rent",
     maintenance: "Included in rent",
+    onboardingCharge: 6000,
     images: [img.modernA, img.roomC, img.houseB, img.modernB],
     description:
-      "Amber House offers three bedrooms of warm, layered interiors near Bellandur — ideal for shared living or small families. Earthy palettes, ample storage, and professional upkeep included.",
+      "Amber House in Sector 37, Faridabad offers three bedrooms of warm, layered interiors — ideal for families or shared living with professional upkeep included.",
     highlights: [
       "Three-bedroom family layout",
       "Dedicated dining space",
-      "Near lakeside walking trails",
+      "Near parks and daily essentials",
       "In-house maintenance team",
     ],
     amenities: [
@@ -206,9 +218,58 @@ export function getPropertyById(id) {
 export function getSimilarProperties(id, limit = 3) {
   const current = getPropertyById(id);
   if (!current) return [];
-  return properties.filter((p) => p.id !== id).slice(0, limit);
+  return properties
+    .filter((p) => p.id !== id && p.city === current.city)
+    .slice(0, limit);
 }
 
 export function getAllPropertyIds() {
   return properties.map((p) => p.id);
+}
+
+function parsePrice(value) {
+  return Number(String(value ?? "").replace(/[^\d]/g, "")) || 0;
+}
+
+/**
+ * Filter listings by city/location query from homepage or listings filters.
+ * Primary match is `city` (Delhi / Faridabad); also matches neighbourhood text.
+ * Pass `list` to filter API results instead of the static catalog.
+ */
+export function filterProperties(filters = {}, list = properties) {
+  const location = String(filters.location || "").trim().toLowerCase();
+  const propertyType = String(
+    filters.propertyType || filters.type || ""
+  ).trim();
+  const budget = String(filters.budget || "").trim();
+
+  return list.filter((property) => {
+    if (property.isActive === false) return false;
+
+    if (location) {
+      const city = String(property.city || "").toLowerCase();
+      const area = String(property.location || "").toLowerCase();
+      const cityMatch = city === location;
+      const areaMatch = area.includes(location);
+      if (!cityMatch && !areaMatch) return false;
+    }
+
+    if (propertyType && property.propertyType !== propertyType) {
+      return false;
+    }
+
+    if (budget) {
+      const amount = parsePrice(property.price);
+      if (budget === "0-30000" && amount >= 30000) return false;
+      if (budget === "30000-50000" && (amount < 30000 || amount > 50000)) {
+        return false;
+      }
+      if (budget === "50000-80000" && (amount < 50000 || amount > 80000)) {
+        return false;
+      }
+      if (budget === "80000+" && amount < 80000) return false;
+    }
+
+    return true;
+  });
 }

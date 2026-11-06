@@ -21,11 +21,37 @@ import {
   Trees,
   Sparkles,
   Check,
+  ExternalLink,
 } from "lucide-react";
 import ListingDetailGallery from "./ListingDetailGallery";
 import VisitBookingModal from "./VisitBookingModal";
 import SinglePropertyMap from "./SinglePropertyMap";
 import ListingPropertyCard from "./ListingPropertyCard";
+import ExpandableTextSection from "./ExpandableTextSection";
+
+function ItemGroup({ id, title, items }) {
+  const filled = (items || []).map((item) => String(item).trim()).filter(Boolean);
+  if (!filled.length) return null;
+
+  return (
+    <section className="mt-12" aria-labelledby={id}>
+      <h2 id={id} className="text-xl sm:text-2xl font-serif text-[#2B2118]">
+        {title}
+      </h2>
+      <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+        {filled.map((item, index) => (
+          <li
+            key={`${item}-${index}`}
+            className="flex items-start gap-3 rounded-2xl bg-white/60 border border-[#EDE6DF] px-4 py-3.5 text-sm sm:text-base text-[#2B2118]"
+          >
+            <Check className="h-5 w-5 shrink-0 text-[#B08B6D] mt-0.5" aria-hidden="true" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
 const tagStyles = {
   Featured: "bg-[#2B2118] text-white",
@@ -80,6 +106,14 @@ function BookingCard({ property, onVisitClick, className = "" }) {
             {property.availableFrom}
           </dd>
         </div>
+        {property.onboardingCharge != null && (
+          <div className="flex justify-between gap-4">
+            <dt className="text-gray-500">Onboarding</dt>
+            <dd className="text-[#2B2118] font-medium text-right m-0">
+              ₹{Number(property.onboardingCharge).toLocaleString("en-IN")}
+            </dd>
+          </div>
+        )}
       </dl>
 
       <button
@@ -105,7 +139,10 @@ export default function ListingDetailPage({ property, similarProperties = [] }) 
   const tagClass = tagStyles[property.tag] ?? tagStyles.Verified;
 
   const stats = [
-    { icon: BedDouble, label: `${property.beds} Bedrooms` },
+    {
+      icon: BedDouble,
+      label: property.floorPlan || `${property.beds} Bedrooms`,
+    },
     { icon: Bath, label: `${property.baths} Bathrooms` },
     { icon: Maximize2, label: `${property.area} sqft` },
     { icon: Sofa, label: property.furnished },
@@ -115,6 +152,15 @@ export default function ListingDetailPage({ property, similarProperties = [] }) 
     { icon: Calendar, label: "Availability", value: property.availableFrom },
     { icon: Wallet, label: "Deposit", value: property.deposit },
     { icon: Wrench, label: "Maintenance", value: property.maintenance },
+    ...(property.onboardingCharge != null
+      ? [
+          {
+            icon: Wallet,
+            label: "Onboarding",
+            value: `₹${Number(property.onboardingCharge).toLocaleString("en-IN")}`,
+          },
+        ]
+      : []),
     { icon: ShieldCheck, label: "Management", value: "LiveEasy managed" },
   ];
 
@@ -189,17 +235,11 @@ export default function ListingDetailPage({ property, similarProperties = [] }) 
                 ))}
               </ul>
 
-              <section className="mt-12" aria-labelledby="about-heading">
-                <h2
-                  id="about-heading"
-                  className="text-xl sm:text-2xl font-serif text-[#2B2118]"
-                >
-                  About this home
-                </h2>
-                <p className="mt-4 text-gray-600 leading-relaxed text-base sm:text-lg max-w-3xl">
-                  {property.description}
-                </p>
-              </section>
+              <ExpandableTextSection
+                id="about-heading"
+                title="About this home"
+                value={property.description}
+              />
 
               <section className="mt-12" aria-labelledby="highlights-heading">
                 <h2
@@ -269,6 +309,27 @@ export default function ListingDetailPage({ property, similarProperties = [] }) 
                 </dl>
               </section>
 
+              <ItemGroup
+                id="rent-excludes-heading"
+                title="Rent excludes"
+                items={property.rentExcludes}
+              />
+              <ItemGroup
+                id="liveasy-manages-heading"
+                title="LivEasy Homes Manages"
+                items={property.liveasyManages}
+              />
+              <ItemGroup
+                id="owner-responsibilities-heading"
+                title="Owner is directly responsible for"
+                items={property.ownerResponsibilities}
+              />
+              <ExpandableTextSection
+                id="terms-heading"
+                title="Terms & Conditions"
+                value={property.termsAndConditions}
+              />
+
               <section className="mt-12" aria-labelledby="location-heading">
                 <h2
                   id="location-heading"
@@ -277,6 +338,17 @@ export default function ListingDetailPage({ property, similarProperties = [] }) 
                   Location
                 </h2>
                 <p className="mt-2 text-gray-600">{property.location}</p>
+                {property.lat != null && property.lng != null && (
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${property.lat},${property.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-[#8A6A55] hover:text-[#2B2118] transition-colors"
+                  >
+                    Get Directions
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                  </a>
+                )}
                 <div className="mt-5">
                   <SinglePropertyMap property={property} />
                 </div>

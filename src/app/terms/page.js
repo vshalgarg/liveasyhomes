@@ -3,7 +3,12 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata = {
   title: "Terms & Conditions",
-  description: `Terms and conditions for using ${siteConfig.name} website and rental services.`,
+  description: `Read the terms and conditions for using ${siteConfig.name} website and rental services in Delhi NCR.`,
+  keywords: [
+    "LiveEasy Homes terms",
+    "rental service terms India",
+    "website terms and conditions",
+  ],
   alternates: { canonical: "/terms" },
   robots: { index: true, follow: true },
 };

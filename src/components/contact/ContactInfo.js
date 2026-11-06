@@ -5,14 +5,14 @@ const details = [
   {
     icon: MapPin,
     label: "Address",
-    value: "Delhi NCR, India",
+    value: "Plot No. 38, Shop No. 3, Veer Savarkar Block, Shakarpur, Delhi – 110092",
     href: null,
   },
   {
     icon: Phone,
     label: "Phone",
-    value: "+91 98114 46782",
-    href: "tel:+919811446782",
+    value: "+91 9953725343",
+    href: "tel:+919953725343",
   },
   {
     icon: Mail,
@@ -23,7 +23,7 @@ const details = [
   {
     icon: Clock,
     label: "Working Hours",
-    value: "Mon – Sat: 9:00 AM – 7:00 PM",
+    value: "Mon – Sun: 9:00 AM – 7:00 PM",
     href: null,
   },
 ];

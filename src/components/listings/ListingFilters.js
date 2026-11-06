@@ -1,12 +1,63 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import AnimateIn from "@/components/AnimateIn";
+import ComingSoonModal from "@/components/ComingSoonModal";
+import {
+  COMING_SOON_LOCATIONS,
+  SEARCH_LOCATIONS,
+  isComingSoonLocation,
+} from "@/lib/searchLocations";
 
 const fieldClass =
   "min-w-[200px] sm:min-w-0 flex-shrink-0 sm:flex-shrink snap-start";
 
-export default function ListingFilters() {
+export default function ListingFilters({ initialFilters = {} }) {
+  const router = useRouter();
+  const [location, setLocation] = useState(initialFilters.location || "");
+  const [propertyType, setPropertyType] = useState(
+    initialFilters.propertyType || ""
+  );
+  const [budget, setBudget] = useState(initialFilters.budget || "");
+  const [beds, setBeds] = useState(initialFilters.beds || "");
+  const [comingSoonCity, setComingSoonCity] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleLocationChange = (e) => {
+    const value = e.target.value;
+    setLocation(value);
+    if (isComingSoonLocation(value)) {
+      setComingSoonCity(value);
+      setModalOpen(true);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isComingSoonLocation(location)) {
+      setComingSoonCity(location);
+      setModalOpen(true);
+      return;
+    }
+
+    const params = new URLSearchParams();
+    if (location) params.set("location", location);
+    if (propertyType) params.set("propertyType", propertyType);
+    if (budget) params.set("budget", budget);
+    if (beds) params.set("beds", beds);
+    const qs = params.toString();
+    router.push(qs ? `/listings?${qs}` : "/listings");
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    if (COMING_SOON_LOCATIONS.includes(location)) {
+      setLocation("");
+    }
+  };
+
   return (
     <section
       id="search-filters"
@@ -37,8 +88,7 @@ export default function ListingFilters() {
           <div className="rounded-[24px] border border-[#E8E0D8] bg-[#FAF8F5] shadow-[0_8px_30px_rgba(43,33,24,0.05)] overflow-hidden">
             <form
               role="search"
-              action="/listings"
-              method="get"
+              onSubmit={handleSubmit}
               aria-label="Filter rental properties"
               className="p-5 sm:p-6 md:p-8"
             >
@@ -50,13 +100,20 @@ export default function ListingFilters() {
                   >
                     Location
                   </label>
-                  <input
+                  <select
                     id="filter-location"
                     name="location"
-                    type="text"
-                    placeholder="Bangalore, Indiranagar..."
-                    className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] placeholder:text-gray-400 focus:border-[#B08B6D] transition"
-                  />
+                    value={location}
+                    onChange={handleLocationChange}
+                    className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
+                  >
+                    <option value="">All locations</option>
+                    {SEARCH_LOCATIONS.map((city) => (
+                      <option key={city} value={city}>
+                        {city}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className={fieldClass}>
@@ -68,13 +125,19 @@ export default function ListingFilters() {
                   </label>
                   <select
                     id="filter-type"
-                    name="type"
+                    name="propertyType"
+                    value={propertyType}
+                    onChange={(e) => setPropertyType(e.target.value)}
                     className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
                   >
                     <option value="">All Types</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="villa">Villa</option>
-                    <option value="studio">Studio</option>
+                    <option value="Gated Apartment">Gated Apartment</option>
+                    <option value="Independent House">Independent House</option>
+                    <option value="Independent Villa">Independent Villa</option>
+                    <option value="Shared Service Apartment">
+                      Shared Service Apartment
+                    </option>
+                    <option value="Builder Floor">Builder Floor</option>
                   </select>
                 </div>
 
@@ -88,12 +151,15 @@ export default function ListingFilters() {
                   <select
                     id="filter-budget"
                     name="budget"
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
                     className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
                   >
                     <option value="">Any Range</option>
-                    <option value="0-40000">Under ₹40,000</option>
-                    <option value="40000-60000">₹40,000 – ₹60,000</option>
-                    <option value="60000+">Above ₹60,000</option>
+                    <option value="0-30000">Under ₹30,000</option>
+                    <option value="30000-50000">₹30,000 – ₹50,000</option>
+                    <option value="50000-80000">₹50,000 – ₹80,000</option>
+                    <option value="80000+">₹80,000+</option>
                   </select>
                 </div>
 
@@ -107,6 +173,8 @@ export default function ListingFilters() {
                   <select
                     id="filter-beds"
                     name="beds"
+                    value={beds}
+                    onChange={(e) => setBeds(e.target.value)}
                     className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
                   >
                     <option value="">Any</option>
@@ -131,6 +199,12 @@ export default function ListingFilters() {
           </div>
         </AnimateIn>
       </div>
+
+      <ComingSoonModal
+        city={comingSoonCity}
+        isOpen={modalOpen}
+        onClose={closeModal}
+      />
     </section>
   );
 }

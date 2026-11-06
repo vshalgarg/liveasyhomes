@@ -39,8 +39,10 @@ export default function ListingHero({ totalCount }) {
             <span className="italic text-[#B08B6D]">calm</span> place to live
           </h1>
           <p className="mt-5 text-gray-600 text-base md:text-lg leading-relaxed max-w-2xl">
-            Explore {totalCount}+ verified, professionally managed homes across
-            Bangalore — designed for peaceful, effortless living.
+            Explore{" "}
+            {totalCount == null ? "verified" : `${totalCount}+ verified`},
+            professionally managed homes across Delhi &amp; Faridabad — designed
+            for peaceful, effortless living.
           </p>
         </AnimateIn>
 
@@ -49,7 +51,7 @@ export default function ListingHero({ totalCount }) {
             <div>
               <dt className="sr-only">Total properties</dt>
               <dd className="text-2xl md:text-3xl font-semibold text-[#2B2118] m-0">
-                {totalCount}+
+                {totalCount == null ? "—" : `${totalCount}+`}
               </dd>
               <dd className="text-sm text-gray-500 mt-1 m-0 font-normal">
                 Verified homes
@@ -58,7 +60,7 @@ export default function ListingHero({ totalCount }) {
             <div>
               <dt className="sr-only">Cities</dt>
               <dd className="text-2xl md:text-3xl font-semibold text-[#2B2118] m-0">
-                12+
+                3+
               </dd>
               <dd className="text-sm text-gray-500 mt-1 m-0 font-normal">
                 Cities

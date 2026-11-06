@@ -1,18 +1,23 @@
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import { siteConfig, defaultOpenGraph } from "@/lib/site";
 
 export const metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: `${siteConfig.name} | ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  authors: [{ name: siteConfig.name }],
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
+  publisher: siteConfig.name,
   category: "Real Estate",
+  classification: "Rental Homes, Managed Apartments, Delhi NCR",
+  referrer: "origin-when-cross-origin",
   formatDetection: {
     telephone: false,
     email: false,
@@ -20,15 +25,16 @@ export const metadata = {
   },
   openGraph: {
     ...defaultOpenGraph,
-    title: siteConfig.name,
+    title: `${siteConfig.name} | ${siteConfig.tagline}`,
     description: siteConfig.description,
     url: siteConfig.url,
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title: `${siteConfig.name} | ${siteConfig.tagline}`,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
+    creator: siteConfig.twitterHandle,
   },
   robots: {
     index: true,
@@ -36,12 +42,27 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
   alternates: {
     canonical: "/home",
+    languages: {
+      "en-IN": "/home",
+      "x-default": "/home",
+    },
+  },
+  icons: {
+    icon: [{ url: "/logo-only.png", type: "image/png" }],
+    shortcut: ["/logo-only.png"],
+    apple: [{ url: "/logo-new.png" }],
+  },
+  manifest: "/site.webmanifest",
+  other: {
+    "geo.region": "IN-DL",
+    "geo.placename": "Delhi NCR",
   },
 };
 
@@ -49,7 +70,10 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#F8F5F1",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F8F5F1" },
+    { media: "(prefers-color-scheme: dark)", color: "#2B2118" },
+  ],
 };
 
 export default function RootLayout({ children }) {
@@ -62,8 +86,10 @@ export default function RootLayout({ children }) {
         >
           Skip to main content
         </a>
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

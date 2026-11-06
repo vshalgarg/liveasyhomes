@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import PropertyPhoto from "./PropertyPhoto";
 
 const AUTO_PLAY_MS = 4000;
 
@@ -44,8 +44,8 @@ export default function PropertyImageCarousel({ images, alt, priority = false })
       aria-label={`${alt} photo gallery`}
     >
       {images.map((src, index) => (
-        <Image
-          key={src}
+        <PropertyPhoto
+          key={`${index}-${typeof src === "string" ? src.slice(0, 48) : index}`}
           src={src}
           alt={`${alt} — photo ${index + 1} of ${images.length}`}
           fill

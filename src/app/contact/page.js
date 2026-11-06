@@ -4,22 +4,45 @@ import ContactInfo from "@/components/contact/ContactInfo";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactCTA from "@/components/contact/ContactCTA";
 import AnimateIn from "@/components/AnimateIn";
-import { siteConfig } from "@/lib/site";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
+import { siteConfig, pageKeywords, defaultOpenGraph } from "@/lib/site";
+
+const title = "Contact Us";
+const description = `Contact ${siteConfig.name} for rental enquiries, home viewings, and support in Delhi & Faridabad. Call, email, or send a message — we reply within 24 hours.`;
 
 export const metadata = {
-  title: "Contact Us",
-  description: `Get in touch with ${siteConfig.name} for rental enquiries, home viewings, and support. Reach us by phone, email, or send us a message — we reply within 24 hours.`,
+  title,
+  description,
+  keywords: pageKeywords(
+    "contact LiveEasy Homes",
+    "rental enquiry Delhi",
+    "book home visit Faridabad",
+    "LiveEasy Homes phone email"
+  ),
   alternates: { canonical: "/contact" },
   openGraph: {
+    ...defaultOpenGraph,
     title: `Contact ${siteConfig.name}`,
-    description: `Reach out to ${siteConfig.name} — we're here to help with rental enquiries, viewings, and support.`,
+    description,
     url: "/contact",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Contact ${siteConfig.name}`,
+    description,
+    images: [siteConfig.ogImage],
   },
 };
 
 export default function Contact() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/home" },
+          { name: "Contact", href: "/contact" },
+        ]}
+      />
       <main id="main-content">
         <ContactHero />
 

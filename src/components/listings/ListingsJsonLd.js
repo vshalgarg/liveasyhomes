@@ -1,49 +1,31 @@
 import { siteConfig } from "@/lib/site";
-import { properties } from "@/data/properties";
 import JsonLd from "@/components/JsonLd";
 
+/** CollectionPage schema for /listings (properties load from API client-side). */
 export default function ListingsJsonLd() {
   return (
     <JsonLd
       data={{
         "@context": "https://schema.org",
-        "@type": "ItemList",
-        name: "LiveEasy Homes Property Listings",
-        description: `Verified rental homes and apartments listed by ${siteConfig.name}.`,
-        numberOfItems: properties.length,
-        itemListElement: properties.map((property, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          url: `${siteConfig.url}/listings/${property.id}`,
-          item: {
-            "@type": "Apartment",
-            name: property.title,
-            description: `${property.beds} bed, ${property.baths} bath rental in ${property.location}.`,
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: property.city,
-              addressCountry: "IN",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: property.lat,
-              longitude: property.lng,
-            },
-            numberOfRooms: property.beds,
-            floorSize: {
-              "@type": "QuantitativeValue",
-              value: property.area,
-              unitCode: "FTK",
-            },
-            offers: {
-              "@type": "Offer",
-              price: property.price.replace(/,/g, ""),
-              priceCurrency: "INR",
-              availability: "https://schema.org/InStock",
-            },
-            image: property.images?.[0] ?? property.image,
-          },
-        })),
+        "@type": "CollectionPage",
+        name: "Property Listings | LiveEasy Homes",
+        description: `Verified rental homes and apartments in Delhi and Faridabad listed by ${siteConfig.name}.`,
+        url: `${siteConfig.url}/listings`,
+        isPartOf: {
+          "@type": "WebSite",
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+        about: {
+          "@type": "Thing",
+          name: "Rental homes in Delhi NCR",
+        },
+        mainEntity: {
+          "@type": "ItemList",
+          name: "LiveEasy Homes Property Listings",
+          itemListOrder: "https://schema.org/ItemListUnordered",
+          description: `Browse professionally managed rental homes across Delhi and Faridabad.`,
+        },
       }}
     />
   );
