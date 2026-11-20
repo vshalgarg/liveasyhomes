@@ -12,7 +12,7 @@ import {
 } from "@/lib/searchLocations";
 
 const fieldClass =
-  "min-w-[200px] sm:min-w-0 flex-shrink-0 sm:flex-shrink snap-start";
+  "min-w-[160px] sm:min-w-0 flex-shrink-0 sm:flex-shrink snap-start";
 
 export default function ListingFilters({ initialFilters = {} }) {
   const router = useRouter();
@@ -61,42 +61,33 @@ export default function ListingFilters({ initialFilters = {} }) {
   return (
     <section
       id="search-filters"
-      className="py-14 md:py-16 bg-white border-b border-[#EDE6DF]/80"
-      aria-labelledby="filters-heading"
+      className="pt-4 pb-6 md:pt-5 md:pb-7 bg-[#F8F5F1]"
+      aria-label="Search and filter properties"
     >
       <div className="container mx-auto px-4 lg:px-8">
-        <AnimateIn animation="fade-up">
-          <header className="mb-8 md:mb-10">
-            <p className="flex items-center gap-2 text-xs sm:text-sm uppercase tracking-[0.2em] text-[#B08B6D] font-medium">
-              <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-              Search &amp; Filter
-            </p>
-            <h2
-              id="filters-heading"
-              className="text-3xl md:text-4xl font-serif text-[#2B2118] mt-3"
-            >
-              Find your perfect home
-            </h2>
-            <p className="mt-3 text-gray-600 max-w-2xl leading-relaxed">
-              Refine by location, type, budget, and bedrooms — scroll the filters
-              on mobile, then search.
-            </p>
-          </header>
-        </AnimateIn>
-
-        <AnimateIn animation="fade-up" delay={80}>
-          <div className="rounded-[24px] border border-[#E8E0D8] bg-[#FAF8F5] shadow-[0_8px_30px_rgba(43,33,24,0.05)] overflow-hidden">
+        <AnimateIn animation="fade-up" immediate delay={80}>
+          <div className="rounded-2xl border border-[#E8E0D8]/90 bg-white/80 backdrop-blur-sm shadow-[0_6px_24px_rgba(43,33,24,0.04)] overflow-hidden">
             <form
               role="search"
               onSubmit={handleSubmit}
               aria-label="Filter rental properties"
-              className="p-5 sm:p-6 md:p-8"
+              className="p-3 sm:p-4"
             >
-              <div className="flex md:grid md:grid-cols-2 lg:grid-cols-5 gap-5 md:gap-4 overflow-x-auto md:overflow-visible pb-2 md:pb-0 -mx-1 px-1 md:mx-0 md:px-0 snap-x snap-mandatory scroll-smooth [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#D1CBC4]">
+              <div className="mb-2.5 flex items-center gap-2 px-0.5">
+                <SlidersHorizontal
+                  className="h-3.5 w-3.5 text-[#B08B6D]"
+                  aria-hidden="true"
+                />
+                <p className="text-[11px] uppercase tracking-[0.18em] text-[#B08B6D] font-medium m-0">
+                  Refine results
+                </p>
+              </div>
+
+              <div className="flex md:grid md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-3 overflow-x-auto md:overflow-visible pb-1 md:pb-0 -mx-0.5 px-0.5 md:mx-0 md:px-0 snap-x snap-mandatory scroll-smooth [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#D1CBC4]">
                 <div className={fieldClass}>
                   <label
                     htmlFor="filter-location"
-                    className="text-xs uppercase tracking-wider text-gray-500"
+                    className="text-[11px] uppercase tracking-wider text-gray-500"
                   >
                     Location
                   </label>
@@ -105,7 +96,7 @@ export default function ListingFilters({ initialFilters = {} }) {
                     name="location"
                     value={location}
                     onChange={handleLocationChange}
-                    className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
+                    className="w-full mt-1.5 min-h-[44px] px-3 rounded-xl bg-[#FAF8F5] border border-[#E0D6CC] outline-none text-sm text-[#2B2118] focus:border-[#B08B6D] focus:bg-white transition"
                   >
                     <option value="">All locations</option>
                     {SEARCH_LOCATIONS.map((city) => (
@@ -119,16 +110,16 @@ export default function ListingFilters({ initialFilters = {} }) {
                 <div className={fieldClass}>
                   <label
                     htmlFor="filter-type"
-                    className="text-xs uppercase tracking-wider text-gray-500"
+                    className="text-[11px] uppercase tracking-wider text-gray-500"
                   >
-                    Property Type
+                    Type
                   </label>
                   <select
                     id="filter-type"
                     name="propertyType"
                     value={propertyType}
                     onChange={(e) => setPropertyType(e.target.value)}
-                    className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
+                    className="w-full mt-1.5 min-h-[44px] px-3 rounded-xl bg-[#FAF8F5] border border-[#E0D6CC] outline-none text-sm text-[#2B2118] focus:border-[#B08B6D] focus:bg-white transition"
                   >
                     <option value="">All Types</option>
                     <option value="Gated Apartment">Gated Apartment</option>
@@ -144,7 +135,7 @@ export default function ListingFilters({ initialFilters = {} }) {
                 <div className={fieldClass}>
                   <label
                     htmlFor="filter-budget"
-                    className="text-xs uppercase tracking-wider text-gray-500"
+                    className="text-[11px] uppercase tracking-wider text-gray-500"
                   >
                     Budget
                   </label>
@@ -153,7 +144,7 @@ export default function ListingFilters({ initialFilters = {} }) {
                     name="budget"
                     value={budget}
                     onChange={(e) => setBudget(e.target.value)}
-                    className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
+                    className="w-full mt-1.5 min-h-[44px] px-3 rounded-xl bg-[#FAF8F5] border border-[#E0D6CC] outline-none text-sm text-[#2B2118] focus:border-[#B08B6D] focus:bg-white transition"
                   >
                     <option value="">Any Range</option>
                     <option value="0-30000">Under ₹30,000</option>
@@ -166,16 +157,16 @@ export default function ListingFilters({ initialFilters = {} }) {
                 <div className={fieldClass}>
                   <label
                     htmlFor="filter-beds"
-                    className="text-xs uppercase tracking-wider text-gray-500"
+                    className="text-[11px] uppercase tracking-wider text-gray-500"
                   >
-                    Bedrooms
+                    Beds
                   </label>
                   <select
                     id="filter-beds"
                     name="beds"
                     value={beds}
                     onChange={(e) => setBeds(e.target.value)}
-                    className="w-full mt-2 min-h-[48px] px-3 rounded-xl bg-white border border-[#E0D6CC] outline-none text-[#2B2118] focus:border-[#B08B6D] transition"
+                    className="w-full mt-1.5 min-h-[44px] px-3 rounded-xl bg-[#FAF8F5] border border-[#E0D6CC] outline-none text-sm text-[#2B2118] focus:border-[#B08B6D] focus:bg-white transition"
                   >
                     <option value="">Any</option>
                     <option value="1">1 Bed</option>
@@ -185,13 +176,13 @@ export default function ListingFilters({ initialFilters = {} }) {
                 </div>
 
                 <div
-                  className={`${fieldClass} min-w-[160px] sm:min-w-0 md:col-span-2 lg:col-span-1 flex items-end`}
+                  className={`${fieldClass} min-w-[140px] sm:min-w-0 md:col-span-2 lg:col-span-1 flex items-end`}
                 >
                   <button
                     type="submit"
-                    className="min-h-[48px] w-full bg-[#2B1D13] hover:bg-[#3a2a1e] text-white rounded-[20px] font-medium transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
+                    className="min-h-[44px] w-full bg-[#2B1D13] hover:bg-[#3a2a1e] text-white rounded-xl text-sm font-medium transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]"
                   >
-                    Search Homes
+                    Search
                   </button>
                 </div>
               </div>

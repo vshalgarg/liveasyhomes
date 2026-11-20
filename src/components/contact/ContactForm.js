@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2, Loader2 } from "lucide-react";
-import { submitContact } from "@/lib/api/contact";
+import { CONTACT_LIMITS, submitContact } from "@/lib/api/contact";
 import { ApiError } from "@/lib/api/client";
 
 const initialState = {
@@ -15,8 +15,33 @@ const initialState = {
 const inputBase =
   "w-full min-h-[48px] rounded-xl border border-[#E0D6CC] bg-white px-4 py-3 text-[#2B2118] placeholder:text-gray-400 outline-none transition focus:border-[#B08B6D] focus:ring-2 focus:ring-[#B08B6D]/20";
 
-const labelClass =
-  "block text-sm font-medium text-[#2B2118] mb-2";
+const labelClass = "block text-sm font-medium text-[#2B2118] mb-2";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^[0-9+\-\s()]{7,20}$/;
+
+const FIELD_MAX = {
+  name: CONTACT_LIMITS.NAME_MAX,
+  email: CONTACT_LIMITS.EMAIL_MAX,
+  phone: CONTACT_LIMITS.PHONE_MAX,
+  message: CONTACT_LIMITS.MESSAGE_MAX,
+};
+
+function CharCount({ value, max, id }) {
+  const count = value.length;
+  const nearLimit = count >= max;
+  return (
+    <p
+      id={id}
+      className={`mt-1.5 text-xs tabular-nums ${
+        nearLimit ? "text-[#8A6A55]" : "text-gray-400"
+      }`}
+      aria-live="polite"
+    >
+      {count}/{max}
+    </p>
+  );
+}
 
 export default function ContactForm() {
   const [values, setValues] = useState(initialState);
@@ -26,7 +51,9 @@ export default function ContactForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues((prev) => ({ ...prev, [name]: value }));
+    const max = FIELD_MAX[name];
+    const nextValue = max != null ? value.slice(0, max) : value;
+    setValues((prev) => ({ ...prev, [name]: nextValue }));
     if (errors[name]) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -38,17 +65,37 @@ export default function ContactForm() {
 
   const validate = () => {
     const next = {};
-    if (!values.name.trim()) next.name = "Please enter your name.";
-    if (!values.email.trim()) {
-      next.email = "Please enter your email.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+    const name = values.name.trim();
+    const email = values.email.trim();
+    const phone = values.phone.trim();
+    const message = values.message.trim();
+
+    if (!name) next.name = "Please enter your name.";
+    else if (name.length > CONTACT_LIMITS.NAME_MAX) {
+      next.name = `Name must be ${CONTACT_LIMITS.NAME_MAX} characters or fewer.`;
+    }
+
+    if (!email) next.email = "Please enter your email.";
+    else if (email.length > CONTACT_LIMITS.EMAIL_MAX) {
+      next.email = `Email must be ${CONTACT_LIMITS.EMAIL_MAX} characters or fewer.`;
+    } else if (!EMAIL_RE.test(email)) {
       next.email = "Please enter a valid email address.";
     }
-    if (!values.phone.trim()) {
-      next.phone = "Please enter your phone number.";
-    } else if (!/^[0-9+\-\s()]{7,}$/.test(values.phone)) {
-      next.phone = "Please enter a valid phone number.";
+
+    if (!phone) next.phone = "Please enter your phone number.";
+    else if (
+      phone.length < CONTACT_LIMITS.PHONE_MIN ||
+      phone.length > CONTACT_LIMITS.PHONE_MAX
+    ) {
+      next.phone = `Phone must be ${CONTACT_LIMITS.PHONE_MIN}–${CONTACT_LIMITS.PHONE_MAX} characters.`;
+    } else if (!PHONE_RE.test(phone)) {
+      next.phone = "Use digits, spaces, +, -, or parentheses only.";
     }
+
+    if (message.length > CONTACT_LIMITS.MESSAGE_MAX) {
+      next.message = `Message must be ${CONTACT_LIMITS.MESSAGE_MAX} characters or fewer.`;
+    }
+
     return next;
   };
 
@@ -71,6 +118,7 @@ export default function ContactForm() {
       });
       setStatus("success");
       setValues(initialState);
+      setErrors({});
     } catch (err) {
       setStatus("idle");
       if (err instanceof ApiError && err.fields) {
@@ -146,21 +194,35 @@ export default function ContactForm() {
               name="name"
               type="text"
               autoComplete="name"
+              maxLength={CONTACT_LIMITS.NAME_MAX}
               value={values.name}
               onChange={handleChange}
               aria-invalid={Boolean(errors.name)}
-              aria-describedby={errors.name ? "contact-name-error" : undefined}
+              aria-describedby={
+                errors.name
+                  ? "contact-name-error contact-name-count"
+                  : "contact-name-count"
+              }
               className={inputBase}
               placeholder="Jane Doe"
             />
-            {errors.name && (
-              <p
-                id="contact-name-error"
-                className="mt-1.5 text-xs text-red-600"
-              >
-                {errors.name}
-              </p>
-            )}
+            <div className="flex items-start justify-between gap-3">
+              {errors.name ? (
+                <p
+                  id="contact-name-error"
+                  className="mt-1.5 text-xs text-red-600"
+                >
+                  {errors.name}
+                </p>
+              ) : (
+                <span />
+              )}
+              <CharCount
+                id="contact-name-count"
+                value={values.name}
+                max={CONTACT_LIMITS.NAME_MAX}
+              />
+            </div>
           </div>
 
           <div>
@@ -172,21 +234,35 @@ export default function ContactForm() {
               name="email"
               type="email"
               autoComplete="email"
+              maxLength={CONTACT_LIMITS.EMAIL_MAX}
               value={values.email}
               onChange={handleChange}
               aria-invalid={Boolean(errors.email)}
-              aria-describedby={errors.email ? "contact-email-error" : undefined}
+              aria-describedby={
+                errors.email
+                  ? "contact-email-error contact-email-count"
+                  : "contact-email-count"
+              }
               className={inputBase}
               placeholder="you@example.com"
             />
-            {errors.email && (
-              <p
-                id="contact-email-error"
-                className="mt-1.5 text-xs text-red-600"
-              >
-                {errors.email}
-              </p>
-            )}
+            <div className="flex items-start justify-between gap-3">
+              {errors.email ? (
+                <p
+                  id="contact-email-error"
+                  className="mt-1.5 text-xs text-red-600"
+                >
+                  {errors.email}
+                </p>
+              ) : (
+                <span />
+              )}
+              <CharCount
+                id="contact-email-count"
+                value={values.email}
+                max={CONTACT_LIMITS.EMAIL_MAX}
+              />
+            </div>
           </div>
 
           <div>
@@ -199,21 +275,35 @@ export default function ContactForm() {
               type="tel"
               inputMode="tel"
               autoComplete="tel"
+              maxLength={CONTACT_LIMITS.PHONE_MAX}
               value={values.phone}
               onChange={handleChange}
               aria-invalid={Boolean(errors.phone)}
-              aria-describedby={errors.phone ? "contact-phone-error" : undefined}
+              aria-describedby={
+                errors.phone
+                  ? "contact-phone-error contact-phone-count"
+                  : "contact-phone-count"
+              }
               className={inputBase}
               placeholder="+91 98114 46782"
             />
-            {errors.phone && (
-              <p
-                id="contact-phone-error"
-                className="mt-1.5 text-xs text-red-600"
-              >
-                {errors.phone}
-              </p>
-            )}
+            <div className="flex items-start justify-between gap-3">
+              {errors.phone ? (
+                <p
+                  id="contact-phone-error"
+                  className="mt-1.5 text-xs text-red-600"
+                >
+                  {errors.phone}
+                </p>
+              ) : (
+                <span />
+              )}
+              <CharCount
+                id="contact-phone-count"
+                value={values.phone}
+                max={CONTACT_LIMITS.PHONE_MAX}
+              />
+            </div>
           </div>
 
           <div>
@@ -225,11 +315,35 @@ export default function ContactForm() {
               id="contact-message"
               name="message"
               rows={5}
+              maxLength={CONTACT_LIMITS.MESSAGE_MAX}
               value={values.message}
               onChange={handleChange}
+              aria-invalid={Boolean(errors.message)}
+              aria-describedby={
+                errors.message
+                  ? "contact-message-error contact-message-count"
+                  : "contact-message-count"
+              }
               className={`${inputBase} min-h-[140px] resize-y py-3`}
               placeholder="Tell us a bit about what you're looking for…"
             />
+            <div className="flex items-start justify-between gap-3">
+              {errors.message ? (
+                <p
+                  id="contact-message-error"
+                  className="mt-1.5 text-xs text-red-600"
+                >
+                  {errors.message}
+                </p>
+              ) : (
+                <span />
+              )}
+              <CharCount
+                id="contact-message-count"
+                value={values.message}
+                max={CONTACT_LIMITS.MESSAGE_MAX}
+              />
+            </div>
           </div>
 
           {formError && (

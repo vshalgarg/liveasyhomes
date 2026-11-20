@@ -13,18 +13,16 @@ import ListingCTA from "./listings/ListingCTA";
 const sectionMeta = [
   {
     id: "featured",
-    eyebrow: "Editor's Picks",
+    eyebrow: "Editor's picks",
     title: "Handpicked for you",
-    description:
-      "Our most loved homes — verified, beautifully furnished, and ready for a peaceful move-in.",
+    description: "Verified homes ready for a peaceful move-in.",
     bgClassName: "bg-white",
   },
   {
     id: "new",
-    eyebrow: "Just Listed",
+    eyebrow: "Just listed",
     title: "New arrivals",
-    description:
-      "Freshly added homes in prime neighbourhoods. Be the first to experience them.",
+    description: "Fresh homes in prime neighbourhoods.",
     bgClassName: "bg-[#FAF8F5]",
   },
 ];

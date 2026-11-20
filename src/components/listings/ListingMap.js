@@ -8,7 +8,7 @@ import AnimateIn from "@/components/AnimateIn";
 const ListingMapView = dynamic(() => import("./ListingMapView"), {
   ssr: false,
   loading: () => (
-    <div className="h-[360px] md:h-[480px] w-full rounded-[24px] bg-[#EDE6DF] animate-pulse flex items-center justify-center text-sm text-gray-500">
+    <div className="h-[300px] md:h-[440px] w-full rounded-2xl bg-[#EDE6DF] animate-pulse flex items-center justify-center text-sm text-gray-500">
       Loading map…
     </div>
   ),
@@ -21,29 +21,29 @@ export default function ListingMap({ properties, hasActiveFilters = false }) {
   return (
     <section
       id="map-view"
-      className="py-14 md:py-16 bg-[#FAF8F5]"
+      className="pt-2 pb-6 md:pt-3 md:pb-8 bg-[#F8F5F1]"
       aria-labelledby="map-view-heading"
     >
       <div className="container mx-auto px-4 lg:px-8">
         <AnimateIn animation="fade-up">
-          <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+          <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-4">
             <div>
-              <p className="flex items-center gap-2 text-xs sm:text-sm uppercase tracking-[0.2em] text-[#B08B6D] font-medium">
-                <MapPin className="h-4 w-4" aria-hidden="true" />
-                Map View
+              <p className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#B08B6D] font-medium">
+                <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                Map view
               </p>
               <h2
                 id="map-view-heading"
-                className="text-3xl md:text-4xl font-serif text-[#2B2118] mt-3"
+                className="text-xl md:text-2xl font-serif text-[#2B2118] mt-1"
               >
                 Explore by location
               </h2>
-              <p className="mt-3 text-gray-600 max-w-xl">
+              <p className="mt-1 text-sm text-gray-600 max-w-xl">
                 {isEmpty
                   ? hasActiveFilters
-                    ? "No homes match your current filters, so there’s nothing to pin on the map yet."
-                    : "No homes are listed right now. Check back soon or clear filters if you applied any."
-                  : `All ${count} home${count === 1 ? "" : "s"} across Delhi NCR — tap a pin to see details and jump to the listing.`}
+                    ? "No homes match your filters yet."
+                    : "No homes listed right now — check back soon."
+                  : `${count} home${count === 1 ? "" : "s"} — tap a pin for details.`}
               </p>
             </div>
           </header>
@@ -75,7 +75,7 @@ export default function ListingMap({ properties, hasActiveFilters = false }) {
             )}
           </div>
         ) : (
-          <div className="relative h-[360px] sm:h-[420px] md:h-[480px] rounded-[24px] overflow-hidden border border-[#E8E0D8] shadow-[0_12px_40px_rgba(43,33,24,0.08)]">
+          <div className="relative h-[300px] sm:h-[380px] md:h-[440px] rounded-2xl overflow-hidden border border-[#E8E0D8] shadow-[0_10px_32px_rgba(43,33,24,0.07)]">
             <ListingMapView properties={properties} />
           </div>
         )}

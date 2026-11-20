@@ -15,7 +15,6 @@ export default function PropertySearch() {
   const [location, setLocation] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [budget, setBudget] = useState("");
-  const [moveIn, setMoveIn] = useState("");
   const [comingSoonCity, setComingSoonCity] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -41,7 +40,6 @@ export default function PropertySearch() {
     params.set("location", location);
     if (propertyType) params.set("propertyType", propertyType);
     if (budget) params.set("budget", budget);
-    if (moveIn) params.set("moveIn", moveIn);
     router.push(`/listings?${params.toString()}`);
   };
 
@@ -58,7 +56,7 @@ export default function PropertySearch() {
         <div className="container mx-auto px-4 lg:px-8">
           <AnimateIn animation="scale-in" delay={100} duration={700}>
             <form
-              className="bg-white shadow-xl rounded-2xl sm:rounded-3xl p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 hover:shadow-2xl transition-shadow duration-500"
+              className="bg-white shadow-xl rounded-2xl sm:rounded-3xl p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 hover:shadow-2xl transition-shadow duration-500"
               role="search"
               onSubmit={handleSubmit}
             >
@@ -122,20 +120,6 @@ export default function PropertySearch() {
                   <option value="50000-80000">₹50,000 – ₹80,000</option>
                   <option value="80000+">₹80,000+</option>
                 </select>
-              </div>
-
-              <div>
-                <label htmlFor="search-move-in" className="text-sm text-gray-500">
-                  Move In
-                </label>
-                <input
-                  id="search-move-in"
-                  name="moveIn"
-                  type="date"
-                  value={moveIn}
-                  onChange={(e) => setMoveIn(e.target.value)}
-                  className="w-full mt-2 min-h-[44px] outline-none text-base sm:text-sm"
-                />
               </div>
 
               <button

@@ -21,9 +21,9 @@ async function parseBody(res) {
   }
 }
 
-/** Authenticated calls go through same-origin proxy (httpOnly cookie → Bearer). */
-function resolveUrl(path, auth) {
-  if (!auth) return `${API_BASE_URL}${path}`;
+/** App JWT calls go through same-origin proxy (httpOnly cookie → Bearer). */
+function resolveUrl(path, useCookieProxy) {
+  if (!useCookieProxy) return `${API_BASE_URL}${path}`;
   const stripped = path.startsWith("/api/")
     ? path.slice(4)
     : path.startsWith("/")
@@ -35,13 +35,16 @@ function resolveUrl(path, auth) {
 /**
  * Shared fetch helper.
  * - Public requests hit the Spring API directly.
- * - auth: true requests use the Next.js proxy so the JWT never enters JS.
+ * - auth: true (without custom Authorization) uses the Next.js cookie proxy.
+ * - Custom Authorization (e.g. Firebase ID token) is sent directly to the API.
  */
 export async function apiFetch(
   path,
   { method = "GET", body, formData, auth = false, headers = {} } = {}
 ) {
   const finalHeaders = { ...headers };
+  const hasCustomAuth = Boolean(finalHeaders.Authorization);
+  const useCookieProxy = auth && !hasCustomAuth;
   let payload;
 
   if (formData) {
@@ -53,16 +56,16 @@ export async function apiFetch(
 
   let res;
   try {
-    res = await fetch(resolveUrl(path, auth), {
+    res = await fetch(resolveUrl(path, useCookieProxy), {
       method,
       headers: finalHeaders,
       body: payload,
       cache: "no-store",
-      credentials: auth ? "same-origin" : "omit",
+      credentials: useCookieProxy ? "same-origin" : "omit",
     });
   } catch {
     throw new ApiError(
-      auth
+      useCookieProxy
         ? "Cannot reach the app API proxy. Is Next.js running?"
         : "Cannot reach the API. Is the Java server running on port 8080?",
       { status: 0 }
