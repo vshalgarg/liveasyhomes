@@ -61,6 +61,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, "/api/properties", "/api/properties/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/visits/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/visit-requests").permitAll()
             .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
             .requestMatchers("/api/r2/**").hasRole("ADMIN")
             .requestMatchers("/api/**").authenticated()

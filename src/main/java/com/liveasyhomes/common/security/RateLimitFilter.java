@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * Limits anonymous writes that would otherwise be easy to flood:
- * login, signup, contact, and visit OTP.
+ * login, signup, contact, visit OTP, and visit requests.
  */
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
@@ -63,6 +63,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
     if (path.endsWith("/api/visits/otp/verify")) {
       return 8;
     }
+    if (path.endsWith("/api/visits/request") || path.endsWith("/api/visit-requests")) {
+      return 5;
+    }
     return 0;
   }
 
@@ -79,5 +82,10 @@ public class RateLimitFilter extends OncePerRequestFilter {
       window.addLast(now);
       return true;
     }
+  }
+
+  /** Test hook. The window is process-wide, so API tests clear it between cases. */
+  public void resetForTests() {
+    hits.clear();
   }
 }

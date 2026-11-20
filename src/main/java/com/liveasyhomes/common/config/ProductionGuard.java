@@ -1,6 +1,8 @@
 package com.liveasyhomes.common.config;
 
 import com.liveasyhomes.common.security.JwtService;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,6 +59,16 @@ public class ProductionGuard implements ApplicationRunner {
     }
     if (adminPassword == null || adminPassword.length() < 12 || "admin12345".equals(adminPassword)) {
       problems.add("Set ADMIN_PASSWORD to at least 12 characters and not admin12345.");
+    }
+    if (properties.getFirebase().getProjectId() == null || properties.getFirebase().getProjectId().isBlank()) {
+      problems.add("Set FIREBASE_PROJECT_ID.");
+    }
+    String credentials = properties.getFirebase().getCredentialsPath();
+    if (credentials == null || credentials.isBlank() || !Files.isRegularFile(Path.of(credentials))) {
+      problems.add("Set FIREBASE_CREDENTIALS_PATH or GOOGLE_APPLICATION_CREDENTIALS to the service account JSON file.");
+    }
+    if (properties.getResend().getApiKey() == null || properties.getResend().getApiKey().isBlank()) {
+      problems.add("Set RESEND_API_KEY.");
     }
     String storageType = properties.getStorage().getType();
     if (storageType != null && storageType.equalsIgnoreCase("r2")) {

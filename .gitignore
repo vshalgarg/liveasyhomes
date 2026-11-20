@@ -7,5 +7,7 @@ target/
 .vscode/
 uploads/
 .env
+firebase-service-account.json
+*-firebase-adminsdk-*.json
 .DS_Store
 .tools/

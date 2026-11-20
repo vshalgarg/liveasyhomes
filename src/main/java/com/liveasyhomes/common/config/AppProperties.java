@@ -14,6 +14,8 @@ public class AppProperties {
   private Storage storage = new Storage();
   private Admin admin = new Admin();
   private Otp otp = new Otp();
+  private Firebase firebase = new Firebase();
+  private Resend resend = new Resend();
 
   @Getter
   @Setter
@@ -60,5 +62,21 @@ public class AppProperties {
   public static class Otp {
     private boolean exposeInResponse = false;
     private long ttlSeconds = 300;
+  }
+
+  @Getter
+  @Setter
+  public static class Firebase {
+    private String projectId = "";
+    private String credentialsPath = "";
+  }
+
+  @Getter
+  @Setter
+  public static class Resend {
+    private String apiKey = "";
+    private String from = "LivEasy Homes <request@liveasyhomes.in>";
+    private String contactFrom = "LivEasy Homes <contact@liveasyhomes.in>";
+    private String recipients = "karan@liveasyhomes.in,dev.gdeepanshi@gmail.com";
   }
 }
